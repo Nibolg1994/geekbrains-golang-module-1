@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 )
@@ -38,14 +39,21 @@ func main() {
 	case "*":
 		res = a * b
 	case "/":
+		if b == 0 {
+			fmt.Println("В этой операции деление на ноль запрещено")
+			os.Exit(1)
+		}
 		res = a / b
 	case "%":
-		if a == float64(int64(a)) && b == float64(int64(b)) {
-			res = float64(int64(a) % int64(b))
-		} else {
+		if b == 0 {
+			fmt.Println("В этой операции деление на ноль запрещено")
+			os.Exit(1)
+		}
+		if a != math.Trunc(a) || b != math.Trunc(b) {
 			fmt.Println("В этой операции должны быть целые числа")
 			os.Exit(1)
 		}
+		res = float64(int64(a) % int64(b))
 	default:
 		fmt.Println("Операция выбрана неверно")
 		os.Exit(1)
