@@ -26,13 +26,15 @@ func main() {
 		return
 	}
 	fmt.Println(2)
-	for i = 3; i <= N; i = i + 2 {
-		var sqrt = int64(math.Sqrt(float64(i)))
-		if sqrt*sqrt == i {
+	for i = 3; i <= N; i += 2 {
+
+		var sqrt = math.Sqrt(float64(i))
+		if math.Ceil(sqrt) == sqrt {
 			continue
 		}
+
 		simple := true
-		for j = 2; j <= sqrt; j++ {
+		for j = 2; j <= int64(sqrt); j++ {
 			if i%j == 0 {
 				simple = false
 				break
