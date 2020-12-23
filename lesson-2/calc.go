@@ -11,17 +11,24 @@ func main() {
 	var a, b, res float64
 	var inputa, inputb string
 	var op string
-
 	fmt.Print("Введите первое число: ")
-	fmt.Scanln(&inputa)
-	a, err := strconv.ParseFloat(inputa, 64)
+	_, err := fmt.Scanln(&inputa)
+	if err != nil {
+		fmt.Println("Введены не корректные данные")
+		os.Exit(1)
+	}
+	a, err = strconv.ParseFloat(inputa, 64)
 	if err != nil {
 		fmt.Println("Введены не корректные данные")
 		os.Exit(1)
 	}
 
 	fmt.Print("Введите второе число: ")
-	fmt.Scanln(&inputb)
+	_, err = fmt.Scanln(&inputb)
+	if err != nil {
+		fmt.Println("Введены не корректные данные")
+		os.Exit(1)
+	}
 	b, err = strconv.ParseFloat(inputb, 64)
 	if err != nil {
 		fmt.Println("Введены не корректные данные")
