@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
 	var n int64
@@ -8,27 +11,43 @@ func main() {
 	fmt.Println("Введите номер числа")
 	_, err := fmt.Scanln(&n)
 	if err != nil {
-		panic(err)
+		fmt.Println("Введены не корректные данные!")
+		os.Exit(1)
 	}
-
-	fmt.Println("Число фибоначчи: ", fib(n, memory))
+	fibonacci, err := fib(n, memory)
+	if err != nil {
+		fmt.Println("Ошибка!", err.Error())
+		os.Exit(1)
+	}
+	fmt.Println("Число фибоначчи: ", fibonacci)
 }
 
-func fib(n int64, memory map[int64]int64) int64 {
+func fib(n int64, memory map[int64]int64) (int64, error) {
 	if n == 1 {
-		return 0
+		return 0, nil
 	}
 	if n == 2 {
-		return 1
+		return 1, nil
 	}
 	val, ok := memory[n]
 	if ok {
-		fmt.Println("opt", val)
-		return val
+		return val, nil
 	}
-	memory[n] = fib(n-2, memory) + fib(n-1, memory)
+
+	f1, err := fib(n-2, memory)
+	if err != nil {
+		return 0, err
+	}
+
+	f2, err := fib(n-1, memory)
+	if err != nil {
+		return 0, err
+	}
+
+	memory[n] = f1 + f2
 	if memory[n] < 0 {
-		panic("int64 overflow")
+		return 0, fmt.Errorf("int64 overflow")
 	}
-	return fib(n-2, memory) + fib(n-1, memory)
+
+	return memory[n], nil
 }

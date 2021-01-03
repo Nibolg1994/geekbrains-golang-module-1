@@ -10,19 +10,19 @@ import (
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	var arr [8]int64
-	for i := 0; i < 8; i++ {
+	for i := 0; i < len(arr); i++ {
 		if scanner.Scan() {
 			line := scanner.Text()
 
 			num, err := strconv.ParseInt(line, 10, 64)
 			if err != nil {
-				panic(err)
+				fmt.Println("Введены не корректные данные")
+				os.Exit(1)
 			}
-
 			arr[i] = num
-
 		} else {
-			panic("you must input 8 numbers")
+			fmt.Println("Ошибка! Вы должны ввести 8 чисел")
+			os.Exit(1)
 		}
 	}
 	var slice = arr[:]
