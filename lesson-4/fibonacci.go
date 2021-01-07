@@ -1,26 +1,8 @@
-package main
+package fibonacii
 
 import (
 	"fmt"
-	"os"
 )
-
-func main() {
-	var n int64
-	var memory = make(map[int64]int64)
-	fmt.Println("Введите номер числа")
-	_, err := fmt.Scanln(&n)
-	if err != nil {
-		fmt.Println("Введены не корректные данные!")
-		os.Exit(1)
-	}
-	fibonacci, err := fib(n, memory)
-	if err != nil {
-		fmt.Println("Ошибка!", err.Error())
-		os.Exit(1)
-	}
-	fmt.Println("Число фибоначчи: ", fibonacci)
-}
 
 func fib(n int64, memory map[int64]int64) (int64, error) {
 	if n == 1 {
@@ -35,6 +17,7 @@ func fib(n int64, memory map[int64]int64) (int64, error) {
 	}
 
 	f1, err := fib(n-2, memory)
+
 	if err != nil {
 		return 0, err
 	}
